@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Nuestro Rinconcito 💖</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: black;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ff69b4;
+}
+
+#contador {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #f0f0f0;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  background-color: #ff69b4;
+  color: black;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #ff85c1;
+}
+
+#mensaje {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  min-height: 70px;
+  color: #ffffff;
+  max-width: 400px;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: fall linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-100px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+.heart {
+  position: absolute;
+  font-size: 20px;
+  color: #ff69b4;
+  opacity: 0.9;
+  pointer-events: none;
+  animation: fly 1s forwards;
+}
+
+@keyframes fly {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+}
+
+/* Estilo para imágenes */
+.imagen-romantica {
+  width: 250px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px pink;
+  border: 2px solid #ff69b4;
+  transition: transform 0.3s;
+}
+
+.imagen-romantica:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<h1>Mi novia hermosa, te amo con todo mi corazon 💖</h1>
+<div id="contador">Cargando contador...</div>
+
+<button id="botonMensaje">Presiona aquí 💌</button>
+<button id="botonCarta">Mensajito 💌</button>
+
+<div id="mensaje"></div>
+
+<!-- Imágenes posicionadas alrededor de la pantalla -->
+<img src="https://i.imgur.com/JNXjXa6.jpeg" alt="Nosotros 1 💖" class="imagen-romantica" style="position:absolute; top:5%; left:5%; transform: rotate(-5deg);">
+<img src="https://i.imgur.com/ky2RbtK.jpeg" alt="Nosotros 2 💖" class="imagen-romantica" style="position:absolute; top:5%; right:5%; transform: rotate(7deg);">
+<img src="https://i.imgur.com/YuJqyvx.jpeg" alt="Nosotros 3 💖" class="imagen-romantica" style="position:absolute; bottom:5%; left:5%; transform: rotate(-3deg);">
+
+<script>
+// Contador en tiempo real hasta segundos
+function actualizarContador() {
+  const inicio = new Date('2024-11-17T00:00:00');
+  const ahora = new Date();
+
+  let totalMeses = (ahora.getFullYear() - inicio.getFullYear()) * 12 + (ahora.getMonth() - inicio.getMonth());
+  let dias = ahora.getDate() - inicio.getDate();
+  let horas = ahora.getHours() - inicio.getHours();
+  let minutos = ahora.getMinutes() - inicio.getMinutes();
+  let segundos = ahora.getSeconds() - inicio.getSeconds();
+
+  if(segundos < 0){ minutos -=1; segundos += 60; }
+  if(minutos < 0){ horas -=1; minutos += 60; }
+  if(horas <0){ dias -=1; horas +=24; }
+  if(dias <0){ totalMeses -=1; const prevMonth = new Date(ahora.getFullYear(), ahora.getMonth(), 0).getDate(); dias += prevMonth; }
+
+  const años = Math.floor(totalMeses / 12);
+  const meses = totalMeses % 12;
+
+  document.getElementById('contador').textContent =
+    `Llevamos ${años} años, ${meses} meses, ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos juntos 💖`;
+}
+setInterval(actualizarContador, 1000);
+actualizarContador();
+
+// Mensajes cortos con corazones cayendo
+const mensajes = [
+  "Eres la razón por la que sonrío cada día 💖",
+  "Cada momento contigo es mi favorito ✨",
+  "Mi lugar favorito es a tu lado 💌",
+  "Gracias por hacer mi mundo más bonito 🌙",
+  "Eres mi corazón y mi alegría 💗"
+];
+
+function crearCorazon(x, y){
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = x + 'px';
+  heart.style.top = y + 'px';
+  heart.textContent = '💖';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(), 1000);
+}
+
+document.getElementById('botonMensaje').addEventListener('click', (e) => {
+  const mensaje = mensajes[Math.floor(Math.random() * mensajes.length)];
+  document.getElementById('mensaje').textContent = mensaje;
+  for(let i=0; i<10; i++){
+    const x = e.clientX + (Math.random()*100-50);
+    const y = e.clientY + (Math.random()*100-50);
+    crearCorazon(x,y);
+  }
+});
+
+// Mensajes largos profundos
+const cartas = [
+  "Desde el momento en que llegaste a mi vida, todo se llenó de luz y alegría. Cada instante contigo es un regalo que atesoro en mi corazón. Gracias por ser mi compañera, mi confidente y mi amor eterno. 💖",
+  "A tu lado aprendí lo que significa amar de verdad: cuidar, reír, apoyarnos y soñar juntos. Eres mi refugio, mi inspiración y la razón por la que cada día vale la pena. ✨",
+  "No importa el tiempo ni la distancia, cada segundo que compartimos deja huellas imborrables en mi corazón. Gracias por existir y por hacer mi mundo más hermoso con tu presencia. 🌙",
+  "Contigo descubrí que el amor no se mide solo en palabras, sino en momentos, gestos y miradas. Cada sonrisa tuya ilumina mi alma y me recuerda que somos un equipo invencible. 💌",
+  "Eres mi alegría, mi paz y mi hogar. Cada día contigo es una nueva aventura, y cada recuerdo que creamos juntos es un tesoro que guardaré por siempre EN MI CORAZON. Te amo más de lo que las palabras pueden expresar. 💗"
+];
+
+document.getElementById('botonCarta').addEventListener('click', (e) => {
+  const carta = cartas[Math.floor(Math.random() * cartas.length)];
+  document.getElementById('mensaje').textContent = carta;
+  // Agregar corazones también al presionar mensaje largo
+  for(let i=0; i<10; i++){
+    const x = e.clientX + (Math.random()*100-50);
+    const y = e.clientY + (Math.random()*100-50);
+    crearCorazon(x,y);
+  }
+});
+
+// Estrellas animadas
+const cantidadEstrellas = 250; // más estrellas para ver más lleno
+for(let i = 0; i < cantidadEstrellas; i++){
+  const star = document.createElement('div');
+  star.classList.add('star');
+  star.style.left = Math.random()*window.innerWidth+'px';
+  star.style.width = star.style.height = Math.random()*3+1+'px';
+  star.style.animationDuration = (5 + Math.random()*5)+'s';
+  star.style.animationDelay = Math.random()*5+'s';
+  star.style.top = '0px';
+  document.body.appendChild(star);
+}
+
+// Corazones cayendo lentamente
+function crearCorazonLento() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.top = '-20px';
+  heart.style.fontSize = (10 + Math.random() * 20) + 'px';
+  heart.style.opacity = 0.7 + Math.random() * 0.3;
+  heart.style.transition = 'transform 5s linear, opacity 5s linear';
+  heart.textContent = '💖';
+  document.body.appendChild(heart);
+  setTimeout(() => {
+    heart.style.transform = `translateY(${window.innerHeight + 50}px)`;
+    heart.style.opacity = 0;
+  }, 50);
+  setTimeout(() => heart.remove(), 5500);
+}
+setInterval(crearCorazonLento, 300);
+
+</script>
+</body>
+</html>
